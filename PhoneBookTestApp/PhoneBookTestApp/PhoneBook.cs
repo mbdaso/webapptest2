@@ -1,15 +1,22 @@
-﻿namespace PhoneBookTestApp
+﻿using System.Collections.Generic;
+
+namespace PhoneBookTestApp
 {
     public class PhoneBook : IPhoneBook
     {
-        public void AddPerson(Person person)
+        public void AddPerson(Person newPerson)
         {
-            throw new System.NotImplementedException();
+            DatabaseUtil.Add(newPerson);
+        }
+        public Person FindPerson(string firstName, string lastName)
+        {
+            return DatabaseUtil.Find(firstName, lastName);
         }
 
-        public Person findPerson()
+        public override string ToString()
         {
-            throw new System.NotImplementedException();
+            var personlist = DatabaseUtil.List();
+            return $"{string.Join(",\n", personlist)}";
         }
     }
 }

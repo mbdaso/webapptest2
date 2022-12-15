@@ -1,34 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhoneBookTestApp
 {
     class Program
     {
-        private PhoneBook phonebook = new PhoneBook();
+        static PhoneBook phonebook = new PhoneBook();
         static void Main(string[] args)
         {
             try
             {
-                DatabaseUtil.initializeDatabase();
+                DatabaseUtil.InitializeDatabase();
                 /* TODO: create person objects and put them in the PhoneBook and database
                 * John Smith, (248) 123-4567, 1234 Sand Hill Dr, Royal Oak, MI
                 * Cynthia Smith, (824) 128-8758, 875 Main St, Ann Arbor, MI
                 */
 
-                // TODO: print the phone book out to System.out
-                // TODO: find Cynthia Smith and print out just her entry
-                // TODO: insert the new person objects into the database
+                phonebook.AddPerson(
+                    new Person
+                    {
+                        name = "John Smith",
+                        phoneNumber = "(248) 123-4567",
+                        address = "1234 Sand Hill Dr, Royal Oak, MI"
+                    });
+                phonebook.AddPerson(
+                    new Person { 
+                        name = "Cynthia Smith", 
+                        phoneNumber = "(824) 128-8758", 
+                        address = "875 Main St, Ann Arbor, MI" }
+                    );
 
+                Console.WriteLine("print the phone book out to System.out");
+                Console.WriteLine(phonebook);
+
+                Console.WriteLine("find Cynthia Smith and print out just her entry    ");
+                Console.WriteLine(phonebook.FindPerson(firstName: "Cynthia", lastName: "Smith"));
+
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
             finally
             {
                 DatabaseUtil.CleanUp();
             }
+            Console.ReadLine();
         }
     }
 }
